@@ -1,22 +1,94 @@
-/*function load()
-{
-    document.getElementById("tbl").style.display ="none";
-}*/
+var name = document.getElementById("Name");
+var email = document.forms["RegForm"]["EMail"];
+var phone = document.forms["RegForm"]["Telephone"];
+var gender = document.forms["RegForm"]["gender"];
+var password = document.forms["RegForm"]["Password"];
+var address = document.forms["RegForm"]["Address"];
+var chec = document.forms["RegForm"]["ch"];
+var what = document.forms["RegForm"]["Subject"];
+var validations = function () {
+    function namecheck() {
+        if (document.getElementById("Name").value == "") {
+            document.getElementById("name_error_msg").innerHTML = "enter your name(v)";
+        }
+    }
+    function addresscheck() {
+        namecheck();
+        if (address.value == "") {
+            document.getElementById("address_error_msg").innerHTML = "enter your address(v)";
+            return false;
+        }
+    }
+    function emailcheck() {
+        addresscheck();
+        if (email.value == "") {
+            document.getElementById("mail_error_msg").innerHTML = "enter your Email(v)";
+        }
+        else {
+            var mailformat = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+            if (!email.value.match(mailformat)) {
+                document.getElementById("mail_error_msg").innerHTML = "enter valid Email(v)";
+            }
+        }
+    }
+    function passwordcheck() {
+        emailcheck();
+        if (password.value == "") {
+            document.getElementById("password_error_msg").innerHTML = "enter password(v)";
+        }
+    }
+    function numbercheck() {
+        passwordcheck();
+        if (phone.value == "") {
 
-function clearwarnings(){
-    document.getElementById("1").innerHTML = "";
-    document.getElementById("2").innerHTML = "";
-    document.getElementById("3").innerHTML = "";
-    document.getElementById("4").innerHTML = "";
-    document.getElementById("5").innerHTML = "";
-    document.getElementById("6").innerHTML = "";
-    document.getElementById("7").innerHTML = "";
-    document.getElementById("8").innerHTML = "";
+            document.getElementById("phone_error_msg").innerHTML = "enter your phone number(v)";
+        }
+    }
+    function gendercheck() {
+        numbercheck();
+        if (gender.value == "") {
+            document.getElementById("gender__error_msg").innerHTML = "Choose Gender(v)";
+        }
+    }
+    function coursecheck() {
+        numbercheck();
+        if (what.selectedIndex < 1) {
+            document.getElementById("course_error_msg").innerHTML = "Choose Stream(v)";
+        }
+    }
+    function termscheck() {
+        coursecheck();
+        if (chec.checked == false) {
+            document.getElementById("terms_error_msg").innerHTML = "Accept terms(v) ";
+            return false;
+        }
+    }
+    return {
+        namecheck: namecheck,
+        addresscheck: addresscheck,
+        emailcheck: emailcheck,
+        passwordcheck: passwordcheck,
+        numbercheck: numbercheck,
+        gendercheck: gendercheck,
+        coursecheck: coursecheck,
+        termscheck: termscheck
+    };
+
+}();
+
+function clearwarnings() {
+    document.getElementById("name_error_msg").innerHTML = "";
+    document.getElementById("address_error_msg").innerHTML = "";
+    document.getElementById("mail_error_msg").innerHTML = "";
+    document.getElementById("password_error_msg").innerHTML = "";
+    document.getElementById("phone_error_msg").innerHTML = "";
+    document.getElementById("gender_error_msg").innerHTML = "";
+    document.getElementById("course_error_msg").innerHTML = "";
+    document.getElementById("terms_error_msg").innerHTML = "";
 }
-function update_btn_reset()
-{   
+function update_btn_reset() {
     var row_count = document.querySelector("#tbl").rows.length;
-    document.getElementById("serial").innerHTML = row_count;
+    document.getElementById("serial").value = row_count;
     document.RegForm.reset();
     document.getElementById("button").innerHTML = "<tr><th><input type=\"reset\" class=\"form-control\" onclick=\"clearwarnings()\"</input></th><th><input type=\"button\" class=\"button form-control\" id=\"btn\" onclick=\"subm()\" value=\"register\" name=\"btn\"></th></tr>";
 }
@@ -27,80 +99,44 @@ function submcounter() {
     }
     return submcounter.counter++;
 }
-var what = document.forms["RegForm"]["Subject"];
 function subm() {
-    /*if(document.getElementById("btn").value=="registeragain")
-    {
-        location.reload();
-        return false;
-    }*/
-    /* var bt=document.getElementById("btn").value;
-     if(!bt=="register")
-     {
- 
-     }*/
-    var name = document.forms["RegForm"]["Name"];
-    var email = document.forms["RegForm"]["EMail"];
-    var phone = document.forms["RegForm"]["Telephone"];
-    var gen = document.forms["RegForm"]["gender"];
-    var password = document.forms["RegForm"]["Password"];
-    var address = document.forms["RegForm"]["Address"];
-    var chec = document.forms["RegForm"]["ch"];
-    var serial = document.getElementById("serial").innerHTML;
-    if (name.value == "") {
-        document.getElementById("1").innerHTML = "enter your name";
-    }
-    if (address.value == "") {
-        document.getElementById("2").innerHTML = "enter your address";
-    }
 
-    if (email.value == "") {
-        document.getElementById("3").innerHTML = "enter your Email";
-    }
-    if (password.value == "") {
-        document.getElementById("4").innerHTML = "enter password";
-    }
-    if (phone.value == "") {
+    var serial = document.getElementById("serial").value;
 
-        document.getElementById("5").innerHTML = "enter your phone number";
+    validations.namecheck();
+    validations.addresscheck();
+    validations.emailcheck();
+    validations.passwordcheck();
+    validations.numbercheck();
+    validations.termscheck();
+    if (gender.value == "") {
+        document.getElementById("gender_error_msg").innerHTML = "Choose Gender";
     }
-    if (gen.value == "") {
-        document.getElementById("6").innerHTML = "Choose Gender";
-    }
-    if (what.selectedIndex < 1) {
-        document.getElementById("7").innerHTML = "Choose Stream";
-    }
-    if (chec.checked == false) {
-        document.getElementById("8").innerHTML = "Accept terms ";
-        return false;
-    }
-    if (name.value == "") {
-        document.getElementById("1").innerHTML = "enter your name";
-        return false;
-    }
+    validations.coursecheck();
+    validations.termscheck();
     if (address.value == "") {
-        document.getElementById("2").innerHTML = "enter your address";
+        document.getElementById("address_error_msg").innerHTML = "enter your address";
         return false;
     }
 
     if (email.value == "") {
-        document.getElementById("3").innerHTML = "enter your Email";
+        document.getElementById("mail_error_msg").innerHTML = "enter your Email";
         return false;
     }
     if (password.value == "") {
-        document.getElementById("4").innerHTML = "enter password";
+        document.getElementById("password_error_msg").innerHTML = "enter password";
         return false;
     }
     if (phone.value == "") {
-        document.getElementById("5").innerHTML = "enter your phone number";
+        document.getElementById("phone_error_msg").innerHTML = "enter your phone number";
         return false;
     }
-    if (gen.value == "") {
-        document.getElementById("6").innerHTML = "Choose Gender";
+    if (gender.value == "") {
+        document.getElementById("gender_error_msg").innerHTML = "Choose Gender";
         return false;
     }
     if (what.selectedIndex < 1) {
-        document.getElementById("7").innerHTML = "Choose Stream";
+        document.getElementById("course_error_msg").innerHTML = "Choose Stream";
         return false;
     }
     var check = submcounter();
@@ -113,35 +149,10 @@ function subm() {
     formdata();
     document.RegForm.reset();
     serial++;
-    document.getElementById("serial").innerHTML = serial;
+    document.getElementById("serial").value = serial;
     clearwarnings();
     return true;
 }
-/*function createtable(){
-    var x=document.getElementsByName("gender");
-    document.getElementById("tbl").style.display="block";
-    document.getElementById("d1").innerHTML="Name";
-    document.getElementById("d2").innerHTML="Address";
-    document.getElementById("d3").innerHTML="EMail";
-    document.getElementById("d4").innerHTML="Telephone";
-    document.getElementById("d5").innerHTML="gender";
-    document.getElementById("d6").innerHTML="Course";
-    document.getElementById("display1").innerHTML=document.getElementById("Name").value;
-    document.getElementById("display2").innerHTML=document.getElementById("Address").value;
-    document.getElementById("display3").innerHTML=document.getElementById("EMail").value;
-    document.getElementById("display4").innerHTML=document.getElementById("Telephone").value;
-    for(var i=0;i<x.length;i++)
-    {
-        if(x[i].checked)
-        document.getElementById("display5").innerHTML=x[i].value;
-    }
-    document.getElementById("display6").innerHTML=document.getElementById("Course").value;
-    var f=document.getElementById("btn").value;
-    if(f=="register")
-    {
-        document.getElementById("btn").value="registeragain";
-    }
-}*/
 function tbl() //create table head
 {
     var table = document.querySelector("#tbl");
@@ -157,13 +168,7 @@ function tbl() //create table head
 }
 function formdata() //add formdata into table
 {
-    var name = document.forms["RegForm"]["Name"];
-    var email = document.forms["RegForm"]["EMail"];
-    var phone = document.forms["RegForm"]["Telephone"];
-    var what = document.forms["RegForm"]["Subject"];
-    var password = document.forms["RegForm"]["Password"];
-    var address = document.forms["RegForm"]["Address"];
-    var serial = document.getElementById("serial").innerHTML;
+    var serial = document.getElementById("serial").value;
     var x = document.getElementsByName("gender");
     var tbl = document.querySelector("#tbl");
     var row = tbl.insertRow();
@@ -175,7 +180,7 @@ function formdata() //add formdata into table
     var cell5 = row.insertCell(5);
     var cell6 = row.insertCell(6);
     var cell7 = row.insertCell(7);
-    cell0.innerHTML = name.value;
+    cell0.innerHTML = document.getElementById("Name").value;
     cell1.innerHTML = address.value;
     cell2.innerHTML = email.value;
     cell3.innerHTML = phone.value;
@@ -199,100 +204,72 @@ function update(j) //update data in table
 {
     var i = j.parentNode.parentNode.rowIndex;
     var table = document.querySelector("#tbl").rows[i];
-    var name = table.cells[0].innerHTML;
-    var address = table.cells[1].innerHTML;
-    var email = table.cells[2].innerHTML;
-    var phone = table.cells[3].innerHTML;
-    var gender = table.cells[4].innerHTML;
-    var Course = table.cells[5].innerHTML;
-    var genderOptions = document.getElementsByName("gender");
-    for (var j = 0; j < genderOptions.length; j++) {
-        if (genderOptions[j].value == gender) {
-            genderOptions[j].checked = "checked";
+    var table_name = table.cells[0].innerHTML;
+    var table_address = table.cells[1].innerHTML;
+    var table_email = table.cells[2].innerHTML;
+    var table_phone = table.cells[3].innerHTML;
+    var table_gender = table.cells[4].innerHTML;
+    var table_Course = table.cells[5].innerHTML;
+    var table_genderOptions = document.getElementsByName("gender");
+    for (var j = 0; j < table_genderOptions.length; j++) {
+        if (table_genderOptions[j].value == table_gender) {
+            table_genderOptions[j].checked = "checked";
             break;
         }
     }
     var serial = table.cells[7].innerHTML;
-    document.querySelector("#serial").innerHTML = serial;
-    document.querySelector("#Name").value = name;
-    document.querySelector("#Address").value = address;
-    document.querySelector("#EMail").value = email;
-    document.querySelector("#Telephone").value = phone;
-    document.querySelector("#Course").value = Course;
-    document.getElementById("button").innerHTML = "<tr><th><input type=\"button\" value=\"reset\" class=\"form-control\" onclick=\"clearwarnings(); update_btn_reset();\"</input></th><th><button type=\"button\" class=\"form-control\" id=\"update_btn\"  onclick=\"updatesubmit()\">Update</button></th></tr>";
+    document.querySelector("#serial").value = serial;
+    document.querySelector("#Name").value = table_name;
+    document.querySelector("#Address").value = table_address;
+    document.querySelector("#EMail").value = table_email;
+    document.querySelector("#Telephone").value = table_phone;
+    document.querySelector("#Course").value = table_Course;
+    document.getElementById("button").innerHTML = "<tr><th><input type=\"button\" value=\"reset\" class=\"btn btn-primary btn-block\" onclick=\"clearwarnings(); update_btn_reset();\"</input></th><th><button type=\"button\" class=\"btn btn-primary btn-block\" id=\"update_btn\"  onclick=\"updatesubmit()\">Update</button></th></tr>";
     return i;
 }
 function updatesubmit() //sends updated data to table
 {
     var row_count = document.querySelector("#tbl").rows.length;
-    var name = document.forms["RegForm"]["Name"];
-    var email = document.forms["RegForm"]["EMail"];
-    var phone = document.forms["RegForm"]["Telephone"];
-    var gen = document.forms["RegForm"]["gender"];
-    var what = document.forms["RegForm"]["Subject"];
-    var password = document.forms["RegForm"]["Password"];
-    var address = document.forms["RegForm"]["Address"];
-    var chec = document.forms["RegForm"]["ch"];
-    var serial = document.getElementById("serial").innerHTML;
-    if (name.value == "") {
-        document.getElementById("1").innerHTML = "enter your name";
-    }
-    if (address.value == "") {
-        document.getElementById("2").innerHTML = "enter your address";
-    }
-
-    if (email.value == "") {
-        document.getElementById("3").innerHTML = "enter your Email";
-    }
-    if (password.value == "") {
-        document.getElementById("4").innerHTML = "enter password";
-    }
-    if (phone.value == "") {
-
-        document.getElementById("5").innerHTML = "enter your phone number";
-    }
-    if (gen.value == "") {
-        document.getElementById("6").innerHTML = "Choose Gender";
-    }
-    if (what.selectedIndex < 1) {
-        document.getElementById("7").innerHTML = "Choose Stream";
-    }
-    if (chec.checked == false) {
-        document.getElementById("8").innerHTML = "Accept terms ";
-        return false;
-    }
-    if (name.value == "") {
-        document.getElementById("1").innerHTML = "enter your name";
+    var serial = document.getElementById("serial").value;
+    validations.namecheck();
+    validations.addresscheck();
+    validations.emailcheck();
+    validations.passwordcheck();
+    validations.numbercheck();
+    validations.coursecheck();
+    validations.termscheck();
+    if (document.getElementById("Name").value == "") {
+        document.getElementById("name_error_msg").innerHTML = "enter your name";
         return false;
     }
     if (address.value == "") {
-        document.getElementById("2").innerHTML = "enter your address";
+        document.getElementById("address_error_msg").innerHTML = "enter your address";
         return false;
     }
 
     if (email.value == "") {
-        document.getElementById("3").innerHTML = "enter your Email";
+        document.getElementById("mail_error_msg").innerHTML = "enter your Email";
         return false;
     }
     if (password.value == "") {
-        document.getElementById("4").innerHTML = "enter password";
+        document.getElementById("password_error_msg").innerHTML = "enter password";
         return false;
     }
     if (phone.value == "") {
-        document.getElementById("5").innerHTML = "enter your phone number";
+        document.getElementById("phone_error_msg").innerHTML = "enter your phone number";
         return false;
     }
-    if (gen.value == "") {
-        document.getElementById("6").innerHTML = "Choose Gender";
+    if (gender.value == "") {
+        document.getElementById("gender_error_msg").innerHTML = "Choose Gender";
         return false;
     }
     if (what.selectedIndex < 1) {
-        document.getElementById("7").innerHTML = "Choose Stream";
+        document.getElementById("course_error_msg").innerHTML = "Choose Stream";
         return false;
     }
 
     var table = document.querySelector("#tbl");
-    table.rows[serial].cells[0].innerHTML = name.value;
+    table.rows[serial].cells[0].innerHTML = document.getElementById("Name").value;
     table.rows[serial].cells[1].innerHTML = address.value;
     table.rows[serial].cells[2].innerHTML = email.value;
     table.rows[serial].cells[3].innerHTML = phone.value;
@@ -304,91 +281,18 @@ function updatesubmit() //sends updated data to table
     table.rows[serial].cells[5].innerHTML = document.getElementById("Course").value;
     table.rows[serial].cells[6].innerHTML = '<input type=\"button\" value=\"Delete\" class=\"button\" onclick=\"del(this)\"></input><input type=\"button\" value=\"Update\" class=\"button\" onclick=\"update(this)\"></input>';
     document.RegForm.reset();
-    document.getElementById("button").innerHTML = "<tr><th><input type=\"reset\" class=\"form-control\" onclick=\"clearwarnings()\"</input></th><th><button type=\"button\" id=\"btn\" class=\"form-control\" onclick=\"subm()\">register</button></th></tr>";
-    document.getElementById("serial").innerHTML = row_count;
+    document.getElementById("button").innerHTML = "<tr><th><input type=\"reset\" class=\"btn btn-primary btn-block\" onclick=\"clearwarnings()\"</input></th><th><button type=\"button\" id=\"btn\" class=\"btn btn-primary btn-block\" onclick=\"subm()\">register</button></th></tr>";
+    document.getElementById("serial").value = row_count;
     clearwarnings();
     return true;
 }
-/*function hide()
-    {
-        document.getElementById("tbl").style.display="none";
-    }*/
 function yellow() {
     document.body.style.backgroundColor = "yellow";
     document.getElementById("dynamic").value = "#ffff00";
-    /* document.getElementById("button1").value="change background to red";*/
 }
 function dynamic() {
     var dyn = document.getElementById("dynamic").value;
     document.body.style.backgroundColor = dyn;
     return dyn;
 }
-/*function change()
-{
-    var f=document.getElementById("button1").value;
-    if(f=="change background to red")
-    {
-        document.getElementById("button1").value="change background to yellow";
-        document.body.style.backgroundColor="red";
-    } 
-    else
-    {
-        document.getElementById("button1").value="change background to red";
-        document.body.style.backgroundColor="yellow";
-    }
-}*/
-function namecheck() {
-    var name = document.getElementById("Name").value;
-    var chec = document.forms["RegForm"]["ch"];
-    if (name == "") {
-        document.getElementById("1").innerHTML = "enter your name";
-    }
-}
-function addresscheck() {
-    namecheck();
-    var address = document.forms["RegForm"]["Address"];
-    if (address.value == "") {
-        document.getElementById("2").innerHTML = "enter your address";
-    }
-}
-function emailcheck() {
-    addresscheck();
-    var email = document.forms["RegForm"]["EMail"];
-    if (email.value == "") {
-        document.getElementById("3").innerHTML = "enter your Email";
-    }
-    else {
-        var mailformat = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        if (!email.value.match(mailformat)) {
-            document.getElementById("3").innerHTML = "enter valid Email";
-        }
-    }
-}
-function passwordcheck() {
-    emailcheck();
-    var password = document.forms["RegForm"]["Password"];
-    if (password.value == "") {
-        document.getElementById("4").innerHTML = "enter password";
-    }
-}
-function numbercheck() {
-    passwordcheck();
-    var phone = document.forms["RegForm"]["Telephone"];
-    if (phone.value == "") {
-        document.getElementById("5").innerHTML = "enter your phone number";
-    }
-}
-function gendercheck() {
-    numbercheck();
-    var gen = document.forms["RegForm"]["gender"];
-    if (gen.value == "") {
-        document.getElementById("6").innerHTML = "Choose Gender";
-    }
-}
-function coursecheck() {
-    gendercheck();
-    var what = document.forms["RegForm"]["Subject"];
-    if (what.selectedIndex < 1) {
-        document.getElementById("7").innerHTML = "Choose Stream";
-    }
-}
+
