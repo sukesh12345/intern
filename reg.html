@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>REGISTRATION FORM</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="reg.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body onload="load()" class="jumbotron text-center">
+  <div align="center">
+    <font style="font-weight: bolder;">select custom color:</font><input type="color" id="dynamic" onchange="dynamic()"
+      value="#ffff00">
+  </div>
+  <form name="RegForm" method="post">
+    <i class="fa fa-align-center" aria-hidden="true">
+      <div align="center" class="w-100% p-3" style="background-color: #4e9df7;">
+        <table class="table table-hover text-centered ">
+          <tr>
+            <h4 class="display-4">REGISTRATION FORM</h4>
+          </tr>
+          <tr>
+            <th>Serial No.:</th>
+            <th><label id="serial">1</label></th>
+          </tr>
+          <tr>
+            <th>Name:<font color="red"><sup>*</sup></font>
+            </th>
+            <th><input type="text" class="form-control" id="Name" placeholder="Fullname" class="N" name="Name"><br>
+              <small id="1" class="text-warning"></small>
+            </th>
+          </tr>
+          <tr>
+            <th>Address:<font color="red"><sup>*</sup></font>
+            </th>
+            <th><input type="text" class="form-control" onchange="namecheck()" id="Address"
+                placeholder="Complete Address" class="A" name="Address"><br>
+              <small id="2" class="text-warning"></small>
+            </th>
+          </tr>
+          <tr>
+            <th>E-mail Address:<font color="red"><sup>*</sup></font>
+            </th>
+            <th><input type="email" class="form-control" onchange="emailcheck()" onchange="addresscheck()" id="EMail"
+                placeholder="example@email.com" class="E" name="EMail"><br>
+              <small id="3" class="text-warning"></small>
+            </th>
+          </tr>
+          <tr>
+            <th>Password:<font color="red"><sup>*</sup></font>
+            </th>
+            <th><input type="password" class="form-control" onchange="emailcheck()" id="Password"
+                placeholder="strong password" class="P" name="Password"> <br>
+              <small id="4" class="text-warning"></small>
+            </th>
+          </tr>
+          <tr>
+            <th>Telephone:<font color="red"><sup>*</sup></font>
+            </th>
+            <th><input type="number" class="form-control" onchange="passwordcheck()" id="Telephone" minlength="10"
+                maxlength="10" placeholder="10digit number" class="T" name="Telephone"><br>
+              <small id="5" class="text-warning"></small>
+            </th>
+          </tr>
+          <tr>
+            <th>Gender:<font color="red"><sup>*</sup></font>
+            </th>
+            <th><input type="radio" onclick="numbercheck()" id="gender" name="gender" class="R" value="male">Male
+              <input type="radio" onclick="numbercheck()" class="R" id="gender" name="gender" value="female">Female
+              <input type="radio" name="gender" onclick="numbercheck()" id="gender" class="R" value="other">Other<br>
+              <small id="6" class="text-warning"></small>
+            </th>
+          </tr>
+          <!-----<tr><th>Date of birth:</th><th><input type="date"></th></tr>---->
+          <tr>
+            <th>SELECT YOUR COURSE<font color="red"><sup>*</sup></font>
+            </th>
+            <th><select type="text" class="form-control" class="C" onclick="gendercheck()" id="Course" value=""
+                name="Subject">
+                <option>Choose</option>
+                <option>BTECH</option>
+                <option>BBA</option>
+                <option>BCA</option>
+                <option>B.COM</option>
+              </select><br>
+              <small id="7" class="text-warning"></small>
+            </th>
+          </tr>
+          <tr>
+            <th>Comments: </th>
+            <th><textarea id="Comment" class="form-control" name="Comment">  </textarea></th>
+          </tr>
+
+
+          <tr>
+            <th class="term"><input type="checkbox" onclick="coursecheck()" id="che" name="ch"></th>
+            <th class="terms">Term and Conditions.<font color="red">
+                <sup>*</sup></font><br>
+              <small id="8" class="text-warning"></small>
+            </th>
+          </tr>
+          <tr id="button">
+            <th>
+              <input type="reset" value="Reset" class="button form-control" onclick="clearwarnings();" name="Reset">
+            </th>
+            <th><input type="button" class="button form-control" id="btn" onclick="subm()" value="register" name="btn">
+            </th>
+          </tr>
+        </table>
+      </div>
+
+    </i>
+
+
+  </form>
+  <div>
+    <table align="center" class="table table-bordered table-dark" id="tbl">
+    </table>
+  </div>
+
+
+  <!--custom js-->
+  <script type="text/javascript" src="validation.js"></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
