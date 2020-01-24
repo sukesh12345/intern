@@ -1,82 +1,34 @@
+    .body_background {
+        text-align: center;
+        padding-top: 10rem;
+        padding-bottom: 10rem;
+        background-size: cover;
+        background-image: linear-gradient(to bottom right, #00ffea, #00ccff);
+    }
 
-    /*#button1
-    {
-        border-color: blueviolet;
-        background-color:cornsilk ;
-        box-shadow: cyan;
-        font-variant:small-caps;
-    }*/
-    body{
-        background-color: khaki;
-    }
-    tr{
-        border-color: azure;
-        border-radius: 25px;
-    }
     sub{
         font-weight: lighter;
     }
-    #Name
+    #serial
     {
         width: 98%;
         display: inline;
         border-radius: 25px;
-    }
-    #Address
-    {
-        width: 98%;
-        display: inline;
-        border-radius: 25px;
-    }
-    #EMail
-    {
-        width: 98%;
-        display: inline;
-        border-radius: 25px;
-    }
-    #Password
-    {
-        width: 98%;
-        display: inline;
-        border-radius: 25px;
-    }
-    #Telephone
-    {
-        width: 98%;
-        display: inline;
-        border-radius: 25px;
-    }
-    #Course
-    {
-        width: 100%;
-        display: inline;
-        border-radius: 25px;
-    }
-    #Comment
-    {
-        width: 97%;
-        display: inline;
-        border-radius: 25px;
-    }
-    /*.button {
-        background-color: #4CAF50;
-        border: none;
-        color: white;
-        padding: 15px 32px;
         text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-      }*/
+    }
+    #Name,#Address,#EMail,#Password,#Telephone,#Course,#Comment
+    {
+        width: 98%;
+        display: inline;
+        border-radius: 25px;
+    }
      .data-table{
-            background-color: transparent;
-            border-radius: 25px;
-            border:"1";
-      }
-      .form-table{
-          background-color: aqua;
-          border-style: inset;
-          border-radius: 25px;
+        justify-content: center;
+        padding-left: auto;
+        padding-right: auto;
+        display: inline-table;
+        background: linear-gradient(to bottom right, white  ,rgb(167, 130, 130));
+        border-radius: 10px;
       }
       .background-selector{
           border-color: bisque;
@@ -99,7 +51,7 @@
       }
       .button
       {
-          background-color: #23c74c;
+          background-color: #0199ffe8;
           border-radius: 25px;
           font-weight: bolder;
           font-size: 15px;          
@@ -116,4 +68,17 @@
         border-radius: 25px;
         background-color:khaki;
     }
+    .table-div{
+        justify-content: center;
+        padding-left: auto;
+        padding-right: auto;
+        display: inline-table;
+        background: linear-gradient(to bottom right,white ,rgb(167, 130, 130));
+        border-radius: 10px;        
+    }
+    .text-danger{
+        font-variant: normal;
+        font-weight: 600;
+    }
+    
       
