@@ -6,29 +6,42 @@ var password = document.forms["RegForm"]["Password"];
 var address = document.forms["RegForm"]["Address"];
 var chec = document.forms["RegForm"]["ch"];
 var what = document.forms["RegForm"]["Subject"];
+var mailformat = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+function gendercheck() {
+    if (gender.value == "") {
+        document.getElementById("gender_error_msg").innerHTML = "Choose Gender(v)";
+    }
+    else
+        document.getElementById("gender_error_msg").innerHTML = "";
+}
 var validations = function () {
     function namecheck() {
         if (document.getElementById("Name").value == "") {
             document.getElementById("name_error_msg").innerHTML = "enter your name(v)";
         }
+        else
+            document.getElementById("name_error_msg").innerHTML = "";
     }
     function addresscheck() {
         namecheck();
         if (address.value == "") {
             document.getElementById("address_error_msg").innerHTML = "enter your address(v)";
-            return false;
         }
+        else
+            document.getElementById("address_error_msg").innerHTML = "";
+
     }
     function emailcheck() {
         addresscheck();
         if (email.value == "") {
-            document.getElementById("mail_error_msg").innerHTML = "enter your Email(v)";
+            document.getElementById("mail_error_msg").innerHTML = "enter your email(v)"
         }
-        else {
-            var mailformat = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-            if (!email.value.match(mailformat)) {
-                document.getElementById("mail_error_msg").innerHTML = "enter valid Email(v)";
-            }
+        else if (!email.value.match(mailformat)) {
+            document.getElementById("mail_error_msg").innerHTML = "enter valid Email(v)";
+        }
+        else if ((email.value != "") && (email.value.match(mailformat))) {
+            document.getElementById("mail_error_msg").innerHTML = "";
         }
     }
     function passwordcheck() {
@@ -36,6 +49,8 @@ var validations = function () {
         if (password.value == "") {
             document.getElementById("password_error_msg").innerHTML = "enter password(v)";
         }
+        else
+            document.getElementById("password_error_msg").innerHTML = "";
     }
     function numbercheck() {
         passwordcheck();
@@ -43,25 +58,26 @@ var validations = function () {
 
             document.getElementById("phone_error_msg").innerHTML = "enter your phone number(v)";
         }
+        else
+            document.getElementById("phone_error_msg").innerHTML = "";
     }
-    function gendercheck() {
-        numbercheck();
-        if (gender.value == "") {
-            document.getElementById("gender__error_msg").innerHTML = "Choose Gender(v)";
-        }
-    }
+
     function coursecheck() {
         numbercheck();
+        gendercheck();
         if (what.selectedIndex < 1) {
             document.getElementById("course_error_msg").innerHTML = "Choose Stream(v)";
         }
+        else
+            document.getElementById("course_error_msg").innerHTML = "";
     }
     function termscheck() {
         coursecheck();
         if (chec.checked == false) {
             document.getElementById("terms_error_msg").innerHTML = "Accept terms(v) ";
-            return false;
         }
+        else
+            document.getElementById("terms_error_msg").innerHTML = "";
     }
     return {
         namecheck: namecheck,
@@ -73,8 +89,15 @@ var validations = function () {
         coursecheck: coursecheck,
         termscheck: termscheck
     };
-
 }();
+function serial_validation() {
+    var row_count = document.querySelector("#tbl").rows.length;
+    var table = document.querySelector("#tbl").rows[row_count];
+    var serial = table.cells[7].innerHTML;
+    serial = serial + 1;
+    document.querySelector("#serial").value = serial;
+
+}
 
 function clearwarnings() {
     document.getElementById("name_error_msg").innerHTML = "";
@@ -85,12 +108,11 @@ function clearwarnings() {
     document.getElementById("gender_error_msg").innerHTML = "";
     document.getElementById("course_error_msg").innerHTML = "";
     document.getElementById("terms_error_msg").innerHTML = "";
+
 }
 function update_btn_reset() {
-    var row_count = document.querySelector("#tbl").rows.length;
-    document.getElementById("serial").value = row_count;
     document.RegForm.reset();
-    document.getElementById("button").innerHTML = "<tr><th><input type=\"reset\" class=\"form-control\" onclick=\"clearwarnings()\"</input></th><th><input type=\"button\" class=\"button form-control\" id=\"btn\" onclick=\"subm()\" value=\"register\" name=\"btn\"></th></tr>";
+    document.getElementById("button").innerHTML = "<tr><th><input type=\"button\" value=\"Reset\" class=\"btn btn-primary btn-block\" onclick=\"clearwarnings();serial_validation();\"</input></th><th><input type=\"button\" class=\"btn btn-primary btn-block\" id=\"btn\" onclick=\"subm()\" value=\"register\" name=\"btn\"></th></tr>";
 }
 
 function submcounter() {
@@ -108,10 +130,6 @@ function subm() {
     validations.emailcheck();
     validations.passwordcheck();
     validations.numbercheck();
-    validations.termscheck();
-    if (gender.value == "") {
-        document.getElementById("gender_error_msg").innerHTML = "Choose Gender";
-    }
     validations.coursecheck();
     validations.termscheck();
     if (address.value == "") {
@@ -121,6 +139,10 @@ function subm() {
 
     if (email.value == "") {
         document.getElementById("mail_error_msg").innerHTML = "enter your Email";
+        return false;
+    }
+    else if (!email.value.match(mailformat)) {
+        document.getElementById("mail_error_msg").innerHTML = "enter valid Email";
         return false;
     }
     if (password.value == "") {
@@ -194,14 +216,25 @@ function formdata() //add formdata into table
 }
 function del(r) //delete data table row
 {
-    var i = r.parentNode.parentNode.rowIndex;
-    document.getElementById("tbl").deleteRow(i);
-    var i = document.getElementById("tbl").rows.length;
-    if (i == 1)
-        document.getElementById("tbl").deleteRow(0);
+    var confirmation = window.confirm("Are you sure to go?");
+    if (confirmation == true) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("tbl").deleteRow(i);
+        var i = document.getElementById("tbl").rows.length;
+        if (i == 1)
+            document.getElementById("tbl").deleteRow(0);
+        if (document.getElementById("serial").value == document.querySelector("#tbl").rows[i].cells[7].innerHTML) {
+            document.RegForm.reset();
+        }
+    }
+    else
+        window.alert("cancelled");
+
+
 }
 function update(j) //update data in table
 {
+    clearwarnings();
     var i = j.parentNode.parentNode.rowIndex;
     var table = document.querySelector("#tbl").rows[i];
     var table_name = table.cells[0].innerHTML;
@@ -224,7 +257,7 @@ function update(j) //update data in table
     document.querySelector("#EMail").value = table_email;
     document.querySelector("#Telephone").value = table_phone;
     document.querySelector("#Course").value = table_Course;
-    document.getElementById("button").innerHTML = "<tr><th><input type=\"button\" value=\"reset\" class=\"btn btn-primary btn-block\" onclick=\"clearwarnings(); update_btn_reset();\"</input></th><th><button type=\"button\" class=\"btn btn-primary btn-block\" id=\"update_btn\"  onclick=\"updatesubmit()\">Update</button></th></tr>";
+    document.getElementById("button").innerHTML = "<tr><th><input type=\"button\" value=\"Reset\" class=\"btn btn-primary btn-block\" onclick=\"clearwarnings(); update_btn_reset();serial_validation();\"</input></th><th><button type=\"button\" class=\"btn btn-primary btn-block\" id=\"update_btn\"  onclick=\"updatesubmit();\">Update</button></th></tr>";
     return i;
 }
 function updatesubmit() //sends updated data to table
@@ -251,6 +284,10 @@ function updatesubmit() //sends updated data to table
         document.getElementById("mail_error_msg").innerHTML = "enter your Email";
         return false;
     }
+    else if (!email.value.match(mailformat)) {
+        document.getElementById("mail_error_msg").innerHTML = "enter valid Email";
+        return false;
+    }
     if (password.value == "") {
         document.getElementById("password_error_msg").innerHTML = "enter password";
         return false;
@@ -267,6 +304,10 @@ function updatesubmit() //sends updated data to table
         document.getElementById("course_error_msg").innerHTML = "Choose Stream";
         return false;
     }
+    if (chec.checked == false) {
+        document.getElementById("terms_error_msg").innerHTML = "Accept terms(v) ";
+        return false;
+    }
 
     var table = document.querySelector("#tbl");
     table.rows[serial].cells[0].innerHTML = document.getElementById("Name").value;
@@ -281,11 +322,11 @@ function updatesubmit() //sends updated data to table
     table.rows[serial].cells[5].innerHTML = document.getElementById("Course").value;
     table.rows[serial].cells[6].innerHTML = '<input type=\"button\" value=\"Delete\" class=\"button\" onclick=\"del(this)\"></input><input type=\"button\" value=\"Update\" class=\"button\" onclick=\"update(this)\"></input>';
     document.RegForm.reset();
-    document.getElementById("button").innerHTML = "<tr><th><input type=\"reset\" class=\"btn btn-primary btn-block\" onclick=\"clearwarnings()\"</input></th><th><button type=\"button\" id=\"btn\" class=\"btn btn-primary btn-block\" onclick=\"subm()\">register</button></th></tr>";
-    document.getElementById("serial").value = row_count;
-    clearwarnings();
+    document.querySelector("#serial").value = row_count;
+    document.getElementById("button").innerHTML = "<tr><th><input type=\"button\" value=\"Reset\" class=\"btn btn-primary btn-block\" onclick=\"clearwarnings();serial_validation();\"</input></th><th><button type=\"button\" id=\"btn\" class=\"btn btn-primary btn-block\" onclick=\"subm()\">register</button></th></tr>";
     return true;
 }
+/*
 function yellow() {
     document.body.style.backgroundColor = "yellow";
     document.getElementById("dynamic").value = "#ffff00";
@@ -295,4 +336,4 @@ function dynamic() {
     document.body.style.backgroundColor = dyn;
     return dyn;
 }
-
+*/
