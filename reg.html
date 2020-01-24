@@ -12,83 +12,87 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
-<body onload="load()" class="jumbotron text-center">
-  <div align="center">
-    <font style="font-weight: bolder;">select custom color:</font><input type="color" id="dynamic" onchange="dynamic()"
-      value="#ffff00">
-  </div>
+<body onload="load()" class="body_background ">
   <form name="RegForm" method="post">
     <i class="fa fa-align-center" aria-hidden="true">
-      <div align="center" class="w-100% p-3" style="background-color: #4e9df7;">
-        <table class="table table-hover text-centered ">
+      <div align="center" class="p-3 mb-2  text-black table-div">
+        <table class="form_table">
           <tr>
-            <h4 class="display-4">REGISTRATION FORM</h4>
+            <h4 class="display-4">REGISTER </h4>
           </tr>
           <tr>
             <th>Serial No.:</th>
-            <th><label id="serial">1</label></th>
+            <th><input type="text" class="form-control" id="serial" value="1" disabled></th>
           </tr>
           <tr>
             <th>Name:<font color="red"><sup>*</sup></font>
             </th>
-            <th><input type="text" class="form-control" id="Name" placeholder="Fullname" class="N" name="Name"><br>
-              <small id="1" class="text-warning"></small>
+            <th><input type="text" class="form-control" id="Name" onchange="validations.namecheck()"
+                placeholder="Fullname" class="N" name="Name"><br>
+              <small id="name_error_msg" class="text-danger"></small>
             </th>
           </tr>
           <tr>
-            <th>Address:<font color="red"><sup>*</sup></font>
+            <th>Address:<sup class="text-danger">*</sup>
             </th>
-            <th><input type="text" class="form-control" onchange="namecheck()" id="Address"
-                placeholder="Complete Address" class="A" name="Address"><br>
-              <small id="2" class="text-warning"></small>
+            <th><input type="text" class="form-control" onchange="validations.addresscheck();"
+                onclick="validations.namecheck()" id="Address" placeholder="Complete Address" class="A"
+                name="Address"><br>
+              <small id="address_error_msg" class="text-danger"></small>
             </th>
           </tr>
           <tr>
             <th>E-mail Address:<font color="red"><sup>*</sup></font>
             </th>
-            <th><input type="email" class="form-control" onchange="emailcheck()" onchange="addresscheck()" id="EMail"
-                placeholder="example@email.com" class="E" name="EMail"><br>
-              <small id="3" class="text-warning"></small>
+            <th><input type="email" class="form-control" onchange="validations.emailcheck();"
+                onclick="validations.addresscheck();" id="EMail" placeholder="example@email.com" class="E"
+                name="EMail"><br>
+              <small id="mail_error_msg" class="text-danger"></small>
             </th>
           </tr>
           <tr>
             <th>Password:<font color="red"><sup>*</sup></font>
             </th>
-            <th><input type="password" class="form-control" onchange="emailcheck()" id="Password"
-                placeholder="strong password" class="P" name="Password"> <br>
-              <small id="4" class="text-warning"></small>
+            <th><input type="password" class="form-control" onchange="validations.passwordcheck()"
+                onclick="validations.emailcheck()" id="Password" placeholder="strong password" class="P"
+                name="Password"> <br>
+              <small id="password_error_msg" class="text-danger"></small>
             </th>
           </tr>
           <tr>
             <th>Telephone:<font color="red"><sup>*</sup></font>
             </th>
-            <th><input type="number" class="form-control" onchange="passwordcheck()" id="Telephone" minlength="10"
-                maxlength="10" placeholder="10digit number" class="T" name="Telephone"><br>
-              <small id="5" class="text-warning"></small>
+            <th><input type="number" class="form-control" onchange="validations.numbercheck()"
+                onclick="validations.passwordcheck()" id="Telephone" minlength="10" maxlength="10"
+                placeholder="10digit number" class="T" name="Telephone"><br>
+              <small id="phone_error_msg" class="text-danger"></small>
             </th>
           </tr>
           <tr>
             <th>Gender:<font color="red"><sup>*</sup></font>
             </th>
-            <th><input type="radio" onclick="numbercheck()" id="gender" name="gender" class="R" value="male">Male
-              <input type="radio" onclick="numbercheck()" class="R" id="gender" name="gender" value="female">Female
-              <input type="radio" name="gender" onclick="numbercheck()" id="gender" class="R" value="other">Other<br>
-              <small id="6" class="text-warning"></small>
+            <th><input type="radio" onclick="gendercheck();valdations.numbercheck();" id="gender" name="gender"
+                class="R" value="male">Male
+              <input type="radio" onclick="validations.numbercheck();gendercheck();" class="R" id="gender" name="gender"
+                value="female">Female
+              <input type="radio" name="gender" onclick="validations.numbercheck();gendercheck();" id="gender" class="R"
+                value="other">Other<br>
+              <small id="gender_error_msg" class="text-danger"></small>
             </th>
           </tr>
           <!-----<tr><th>Date of birth:</th><th><input type="date"></th></tr>---->
           <tr>
-            <th>SELECT YOUR COURSE<font color="red"><sup>*</sup></font>
+            <th>Select Your Course<font color="red"><sup>*</sup></font>
             </th>
-            <th><select type="text" class="form-control" class="C" onclick="gendercheck()" id="Course" value=""
-                name="Subject">
+            <th><select type="text" class="form-control" class="C"
+                onchange="validations.gendercheck();validations.coursecheck();" id="Course" value="" name="Subject">
                 <option>Choose</option>
                 <option>BTECH</option>
                 <option>BBA</option>
                 <option>BCA</option>
                 <option>B.COM</option>
               </select><br>
-              <small id="7" class="text-warning"></small>
+              <small id="course_error_msg" class="text-danger"></small>
             </th>
           </tr>
           <tr>
@@ -98,17 +102,19 @@
 
 
           <tr>
-            <th class="term"><input type="checkbox" onclick="coursecheck()" id="che" name="ch"></th>
+            <th class="term"><input type="checkbox" onclick="validations.termscheck()" id="che" name="ch"></th>
             <th class="terms">Term and Conditions.<font color="red">
                 <sup>*</sup></font><br>
-              <small id="8" class="text-warning"></small>
+              <small id="terms_error_msg" class="text-danger"></small>
             </th>
           </tr>
           <tr id="button">
             <th>
-              <input type="reset" value="Reset" class="button form-control" onclick="clearwarnings();" name="Reset">
+              <input type="reset" value="Reset" class="btn btn-primary btn-block" onclick="clearwarnings();"
+                name="Reset">
             </th>
-            <th><input type="button" class="button form-control" id="btn" onclick="subm()" value="register" name="btn">
+            <th><input type="button" class="btn btn-primary btn-block" id="btn" onclick="subm()" value="Register"
+                name="btn">
             </th>
           </tr>
         </table>
@@ -119,7 +125,7 @@
 
   </form>
   <div>
-    <table align="center" class="table table-bordered table-dark" id="tbl">
+    <table align="center" class="data-table text-black" id="tbl">
     </table>
   </div>
 
