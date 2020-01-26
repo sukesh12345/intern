@@ -27,7 +27,7 @@
           <tr>
             <th>Name:<font color="red"><sup>*</sup></font>
             </th>
-            <th><input type="text" class="form-control" id="Name" onchange="validations.namecheck()"
+            <th><input type="text" class="form-control" id="Name" onkeypress="validations.namecheck()"
                 placeholder="Fullname" class="N" name="Name"><br>
               <small id="name_error_msg" class="text-danger"></small>
             </th>
@@ -35,7 +35,7 @@
           <tr>
             <th>Address:<sup class="text-danger">*</sup>
             </th>
-            <th><input type="text" class="form-control" onchange="validations.addresscheck();"
+            <th><input type="text" class="form-control" onkeypress="validations.addresscheck();"
                 onclick="validations.namecheck()" id="Address" placeholder="Complete Address" class="A"
                 name="Address"><br>
               <small id="address_error_msg" class="text-danger"></small>
@@ -44,7 +44,7 @@
           <tr>
             <th>E-mail Address:<font color="red"><sup>*</sup></font>
             </th>
-            <th><input type="email" class="form-control" onchange="validations.emailcheck();"
+            <th><input type="email" class="form-control" onkeypress="validations.emailcheck();" onchange="validations.emailcheck();"
                 onclick="validations.addresscheck();" id="EMail" placeholder="example@email.com" class="E"
                 name="EMail"><br>
               <small id="mail_error_msg" class="text-danger"></small>
@@ -53,7 +53,7 @@
           <tr>
             <th>Password:<font color="red"><sup>*</sup></font>
             </th>
-            <th><input type="password" class="form-control" onchange="validations.passwordcheck()"
+            <th><input type="password" class="form-control" onkeypress="validations.passwordcheck()"
                 onclick="validations.emailcheck()" id="Password" placeholder="strong password" class="P"
                 name="Password"> <br>
               <small id="password_error_msg" class="text-danger"></small>
@@ -62,7 +62,7 @@
           <tr>
             <th>Telephone:<font color="red"><sup>*</sup></font>
             </th>
-            <th><input type="number" class="form-control" onchange="validations.numbercheck()"
+            <th><input type="number" class="form-control" onkeypress="validations.numbercheck()"
                 onclick="validations.passwordcheck()" id="Telephone" minlength="10" maxlength="10"
                 placeholder="10digit number" class="T" name="Telephone"><br>
               <small id="phone_error_msg" class="text-danger"></small>
